@@ -1,4 +1,4 @@
-name: Run Java Git Diff By Local
+name: Run Java CodeReview By Local
 
 on:
   push:
