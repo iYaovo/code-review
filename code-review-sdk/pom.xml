@@ -111,7 +111,7 @@
                     <archive>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                            <mainClass>plus.gaga.middleware.sdk.OpenAiCodeReview</mainClass>
+                            <mainClass>com.iyaovo.sdk.CodeReview</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
