@@ -1,4 +1,4 @@
-package com.test;
+package com.iyaovo.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -13,7 +13,9 @@ public class ApiTest {
 
     @Test
     public void test() {
-        System.out.println(Integer.parseInt("abc1234"));
+        System.out.println(Integer.parseInt("aaa1"));
+        System.out.println(Integer.parseInt("aaa2"));
+        System.out.println(Integer.parseInt("aaa3"));
     }
 
 }
