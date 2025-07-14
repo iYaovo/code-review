@@ -1,4 +1,4 @@
-package com.iyaovo;
+package com;
 
 
 public class Application {
