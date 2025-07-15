@@ -2,7 +2,6 @@ package com.iyaovo.sdk.test;
 
 
 import com.alibaba.fastjson2.JSON;
-import com.iyaovo.sdk.domain.model.ChatCompletionSyncResponse;
 import com.iyaovo.sdk.types.utils.BearerTokenUtils;
 import org.junit.Test;
 
