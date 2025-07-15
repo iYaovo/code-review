@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.iyaovo.sdk.domain.model.ChatCompletionSyncResponse;
 import com.iyaovo.sdk.types.utils.BearerTokenUtils;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.*;
@@ -105,7 +106,6 @@ public class CodeReview {
     }
 
     private static String writeLog(String token, String log) throws Exception {
-
         Git git = Git.cloneRepository()
                 .setURI("https://github.com/iYaovo/code-review-log.git")
                 .setDirectory(new File("repo"))
@@ -125,8 +125,10 @@ public class CodeReview {
         }
 
         git.add().addFilepattern(dateFolderName + "/" + fileName).call();
-        git.commit().setMessage("Add new file").call();
-        git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, ""));
+        git.commit().setMessage("Add new file via GitHub Actions").call();
+        git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, "")).call();
+
+        System.out.println("Changes have been pushed to the repository.");
 
         return "https://github.com/iYaovo/code-review-log/blob/master/" + dateFolderName + "/" + fileName;
     }
