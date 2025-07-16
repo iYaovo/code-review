@@ -47,6 +47,12 @@ public class GitCommand {
         logProcessBuilder.directory(new File("."));
         Process logProcess = logProcessBuilder.start();
 
+        BufferedReader errorReader = new BufferedReader(new InputStreamReader(logProcess.getErrorStream()));
+        String line1;
+        while ((line1 = errorReader.readLine()) != null) {
+            System.err.println("ERROR: " + line1);
+        }
+
         BufferedReader logReader = new BufferedReader(new InputStreamReader(logProcess.getInputStream()));
         String latestCommitHash = logReader.readLine();
         logReader.close();
