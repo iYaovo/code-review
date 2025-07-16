@@ -36,6 +36,12 @@ public class GitCommand {
     }
 
     public String diff() throws IOException, InterruptedException {
+        File workDir = new File(".");
+        System.out.println("当前工作目录：" + workDir.getAbsolutePath());
+// 检查是否存在 .git 目录
+        File gitDir = new File(workDir, ".git");
+        System.out.println(".git 目录是否存在：" + gitDir.exists());
+
         // openai.itedus.cn
         ProcessBuilder logProcessBuilder = new ProcessBuilder("git", "log", "-1", "--pretty=format:%H");
         logProcessBuilder.directory(new File("."));
