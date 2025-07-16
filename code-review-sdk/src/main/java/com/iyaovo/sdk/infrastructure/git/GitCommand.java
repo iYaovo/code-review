@@ -36,7 +36,7 @@ public class GitCommand {
     }
 
     public String diff() throws IOException, InterruptedException {
-        File workDir = new File(".");
+        File workDir = new File("/home/admin/app/package");
         System.out.println("当前工作目录：" + workDir.getAbsolutePath());
 // 检查是否存在 .git 目录
         File gitDir = new File(workDir, ".git");
