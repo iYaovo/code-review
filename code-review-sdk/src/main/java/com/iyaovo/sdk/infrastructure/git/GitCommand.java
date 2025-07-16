@@ -46,6 +46,8 @@ public class GitCommand {
         logReader.close();
         logProcess.waitFor();
 
+        System.out.println("latestCommitHash \t" + latestCommitHash);
+
         ProcessBuilder diffProcessBuilder = new ProcessBuilder("git", "diff", latestCommitHash + "^", latestCommitHash);
         diffProcessBuilder.directory(new File("."));
         Process diffProcess = diffProcessBuilder.start();
