@@ -36,29 +36,15 @@ public class GitCommand {
     }
 
     public String diff() throws IOException, InterruptedException {
-        File workDir = new File("/home/admin/app/package");
-        System.out.println("当前工作目录：" + workDir.getAbsolutePath());
-// 检查是否存在 .git 目录
-        File gitDir = new File(workDir, ".git");
-        System.out.println(".git 目录是否存在：" + gitDir.exists());
-
         // openai.itedus.cn
         ProcessBuilder logProcessBuilder = new ProcessBuilder("git", "log", "-1", "--pretty=format:%H");
         logProcessBuilder.directory(new File("."));
         Process logProcess = logProcessBuilder.start();
 
-        BufferedReader errorReader = new BufferedReader(new InputStreamReader(logProcess.getErrorStream()));
-        String line1;
-        while ((line1 = errorReader.readLine()) != null) {
-            System.err.println("ERROR: " + line1);
-        }
-
         BufferedReader logReader = new BufferedReader(new InputStreamReader(logProcess.getInputStream()));
         String latestCommitHash = logReader.readLine();
         logReader.close();
         logProcess.waitFor();
-
-        System.out.println("latestCommitHash \t" + latestCommitHash);
 
         ProcessBuilder diffProcessBuilder = new ProcessBuilder("git", "diff", latestCommitHash + "^", latestCommitHash);
         diffProcessBuilder.directory(new File("."));
