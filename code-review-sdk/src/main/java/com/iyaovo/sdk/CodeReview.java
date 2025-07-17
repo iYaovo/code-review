@@ -2,7 +2,9 @@ package com.iyaovo.sdk;
 
 
 import com.iyaovo.sdk.domain.service.impl.OpenAiCodeReviewService;
+import com.iyaovo.sdk.infrastructure.git.BaseGitOperation;
 import com.iyaovo.sdk.infrastructure.git.GitCommand;
+import com.iyaovo.sdk.infrastructure.git.GitRestAPIOperation;
 import com.iyaovo.sdk.infrastructure.openai.IOpenAI;
 import com.iyaovo.sdk.infrastructure.openai.impl.ChatGLM;
 import com.iyaovo.sdk.infrastructure.weixin.WeiXin;
@@ -56,7 +58,9 @@ public class CodeReview {
 
         IOpenAI openAI = new ChatGLM(getEnv("CHATGLM_APIHOST"), getEnv("CHATGLM_APIKEYSECRET"));
 
-        OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(gitCommand, openAI, weiXin);
+        BaseGitOperation baseGitOperation = new GitRestAPIOperation(getEnv("GIT_CHECK_COMMIT_URL"),getEnv("GIT_USER_TOKEN"));
+
+        OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(baseGitOperation,gitCommand, openAI, weiXin);
         openAiCodeReviewService.exec();
 
         logger.info("openai-code-review done!");

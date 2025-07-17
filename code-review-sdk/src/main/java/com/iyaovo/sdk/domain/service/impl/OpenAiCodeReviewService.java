@@ -3,6 +3,7 @@ package com.iyaovo.sdk.domain.service.impl;
 
 import com.iyaovo.sdk.domain.model.Model;
 import com.iyaovo.sdk.domain.service.AbstractOpenAiCodeReviewService;
+import com.iyaovo.sdk.infrastructure.git.BaseGitOperation;
 import com.iyaovo.sdk.infrastructure.git.GitCommand;
 import com.iyaovo.sdk.infrastructure.openai.IOpenAI;
 import com.iyaovo.sdk.infrastructure.openai.dto.ChatCompletionRequestDTO;
@@ -10,20 +11,26 @@ import com.iyaovo.sdk.infrastructure.openai.dto.ChatCompletionSyncResponseDTO;
 import com.iyaovo.sdk.infrastructure.weixin.WeiXin;
 import com.iyaovo.sdk.infrastructure.weixin.dto.TemplateMessageDTO;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
 
+    private BaseGitOperation gitOperation;
+
     public OpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, WeiXin weiXin) {
         super(gitCommand, openAI, weiXin);
     }
 
+    public OpenAiCodeReviewService(BaseGitOperation baseGitOperation,GitCommand gitCommand, IOpenAI openAI, WeiXin weiXin) {
+        super(gitCommand, openAI, weiXin);
+        this.gitOperation = gitOperation;
+    }
+
     @Override
-    protected String getDiffCode() throws IOException, InterruptedException {
-        return gitCommand.diff();
+    protected String getDiffCode() throws Exception {
+        return this.gitOperation.diff();
     }
 
     @Override

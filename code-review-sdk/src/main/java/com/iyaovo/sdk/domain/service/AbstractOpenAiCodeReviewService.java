@@ -40,7 +40,7 @@ public abstract class AbstractOpenAiCodeReviewService implements IOpenAiCodeRevi
 
     }
 
-    protected abstract String getDiffCode() throws IOException, InterruptedException;
+    protected abstract String getDiffCode() throws IOException, InterruptedException, Exception;
 
     protected abstract String codeReview(String diffCode) throws Exception;
 

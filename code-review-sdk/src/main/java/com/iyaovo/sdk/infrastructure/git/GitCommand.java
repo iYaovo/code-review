@@ -10,7 +10,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class GitCommand {
+public class GitCommand implements BaseGitOperation{
 
     private final Logger logger = LoggerFactory.getLogger(GitCommand.class);
 
@@ -35,6 +35,7 @@ public class GitCommand {
         this.message = message;
     }
 
+    @Override
     public String diff() throws IOException, InterruptedException {
         // openai.itedus.cn
         ProcessBuilder logProcessBuilder = new ProcessBuilder("git", "log", "-1", "--pretty=format:%H");
