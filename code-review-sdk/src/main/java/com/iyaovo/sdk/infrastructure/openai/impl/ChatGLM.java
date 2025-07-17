@@ -5,6 +5,7 @@ import com.iyaovo.sdk.infrastructure.openai.IOpenAI;
 import com.iyaovo.sdk.infrastructure.openai.dto.ChatCompletionRequestDTO;
 import com.iyaovo.sdk.infrastructure.openai.dto.ChatCompletionSyncResponseDTO;
 import com.iyaovo.sdk.types.utils.BearerTokenUtils;
+import lombok.Data;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+@Data
 public class ChatGLM implements IOpenAI {
 
     private final String apiHost;
