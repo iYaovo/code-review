@@ -10,9 +10,9 @@ import com.iyaovo.sdk.infrastructure.llmmodel.common.text.SystemMessageText;
 import com.iyaovo.sdk.infrastructure.llmmodel.common.text.UserMessageText;
 import com.iyaovo.sdk.infrastructure.llmmodel.zhipu.ZhipuAiChatModel;
 import com.iyaovo.sdk.infrastructure.llmmodel.zhipu.ZhipuChatCompletionModelEnum;
+import com.iyaovo.sdk.infrastructure.message.IMessageStrategy;
 import com.iyaovo.sdk.infrastructure.openai.IOpenAI;
 import com.iyaovo.sdk.infrastructure.openai.impl.ChatGLM;
-import com.iyaovo.sdk.infrastructure.weixin.WeiXin;
 import com.iyaovo.sdk.infrastructure.weixin.dto.TemplateMessageDTO;
 
 import java.util.HashMap;
@@ -22,12 +22,14 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
 
     private BaseGitOperation gitOperation;
 
-    public OpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, WeiXin weiXin) {
-        super(gitCommand, openAI, weiXin);
+    private IMessageStrategy messageStrategy;
+
+    public OpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, IMessageStrategy messageStrategy) {
+        super(gitCommand, openAI, messageStrategy);
     }
 
-    public OpenAiCodeReviewService(BaseGitOperation baseGitOperation,GitCommand gitCommand, IOpenAI openAI, WeiXin weiXin) {
-        super(gitCommand, openAI, weiXin);
+    public OpenAiCodeReviewService(BaseGitOperation baseGitOperation, GitCommand gitCommand, IOpenAI openAI, IMessageStrategy messageStrategy) {
+        super(gitCommand, openAI, messageStrategy);
         this.gitOperation = gitOperation;
     }
 
@@ -68,7 +70,7 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.BRANCH_NAME, gitCommand.getBranch());
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.COMMIT_AUTHOR, gitCommand.getAuthor());
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.COMMIT_MESSAGE, gitCommand.getMessage());
-        weiXin.sendTemplateMessage(logUrl, data);
+        messageStrategy.sendMessage(logUrl, data);
     }
 
 }

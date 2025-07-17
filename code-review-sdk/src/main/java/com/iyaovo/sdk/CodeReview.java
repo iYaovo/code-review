@@ -5,9 +5,10 @@ import com.iyaovo.sdk.domain.service.impl.OpenAiCodeReviewService;
 import com.iyaovo.sdk.infrastructure.git.BaseGitOperation;
 import com.iyaovo.sdk.infrastructure.git.GitCommand;
 import com.iyaovo.sdk.infrastructure.git.GitRestAPIOperation;
+import com.iyaovo.sdk.infrastructure.message.IMessageStrategy;
+import com.iyaovo.sdk.infrastructure.message.MessageFactory;
 import com.iyaovo.sdk.infrastructure.openai.IOpenAI;
 import com.iyaovo.sdk.infrastructure.openai.impl.ChatGLM;
-import com.iyaovo.sdk.infrastructure.weixin.WeiXin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,23 +45,14 @@ public class CodeReview {
                 getEnv("COMMIT_MESSAGE")
         );
 
-        /**
-         * 项目：{{repo_name.DATA}} 分支：{{branch_name.DATA}} 作者：{{commit_author.DATA}} 说明：{{commit_message.DATA}}
-         */
-        WeiXin weiXin = new WeiXin(
-                getEnv("WEIXIN_APPID"),
-                getEnv("WEIXIN_SECRET"),
-                getEnv("WEIXIN_TOUSER"),
-                getEnv("WEIXIN_TEMPLATE_ID")
-        );
-
-
 
         IOpenAI openAI = new ChatGLM(getEnv("CHATGLM_APIHOST"), getEnv("CHATGLM_APIKEYSECRET"));
 
         BaseGitOperation baseGitOperation = new GitRestAPIOperation(getEnv("GIT_CHECK_COMMIT_URL"),getEnv("GIT_USER_TOKEN"));
 
-        OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(baseGitOperation,gitCommand, openAI, weiXin);
+        IMessageStrategy messageStrategy = MessageFactory.getMessageStrategy(getEnv("NOTIFY_TYPE"));
+
+        OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(baseGitOperation,gitCommand, openAI, messageStrategy);
         openAiCodeReviewService.exec();
 
         logger.info("openai-code-review done!");

@@ -73,3 +73,6 @@ jobs:
           # OpenAi - ChatGLM 配置
           CHATGLM_APIHOST: ${{ secrets.CHATGLM_APIHOST }}
           CHATGLM_APIKEYSECRET: ${{ secrets.CHATGLM_APIKEYSECRET }}
+          #飞书配置
+          NOTIFY_TYPE: ${{secrets.NOTIFY_TYPE}}
+          FEISHU_URL: ${{secrets.FEISHU_URL}}

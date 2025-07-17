@@ -1,26 +1,29 @@
 package com.iyaovo.sdk.domain.service;
 
 import com.iyaovo.sdk.infrastructure.git.GitCommand;
+import com.iyaovo.sdk.infrastructure.message.IMessageStrategy;
 import com.iyaovo.sdk.infrastructure.openai.IOpenAI;
-import com.iyaovo.sdk.infrastructure.weixin.WeiXin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 
+/**
+ * @author Iyaov
+ */
 public abstract class AbstractOpenAiCodeReviewService implements IOpenAiCodeReviewService {
 
     private final Logger logger = LoggerFactory.getLogger(AbstractOpenAiCodeReviewService.class);
 
     protected final GitCommand gitCommand;
     protected final IOpenAI openAI;
-    protected final WeiXin weiXin;
+    protected final IMessageStrategy messageStrategy;
 
-    public AbstractOpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, WeiXin weiXin) {
+    public AbstractOpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, IMessageStrategy messageStrategy) {
         this.gitCommand = gitCommand;
         this.openAI = openAI;
-        this.weiXin = weiXin;
+        this.messageStrategy = messageStrategy;
     }
 
     @Override
