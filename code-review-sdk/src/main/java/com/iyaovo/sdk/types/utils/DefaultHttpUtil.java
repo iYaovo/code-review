@@ -43,7 +43,6 @@ public class DefaultHttpUtil {
     }
 
     public static String executePostRequest(String uri, Map<String, String> headers,Object body) throws Exception {
-        System.out.println("这里" + uri);
         URL url = new URL(uri);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
