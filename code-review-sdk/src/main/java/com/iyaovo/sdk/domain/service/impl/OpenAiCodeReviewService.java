@@ -70,6 +70,7 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.BRANCH_NAME, gitCommand.getBranch());
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.COMMIT_AUTHOR, gitCommand.getAuthor());
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.COMMIT_MESSAGE, gitCommand.getMessage());
+        System.out.println("zheli" + messageStrategy);
         messageStrategy.sendMessage(logUrl, data);
     }
 
