@@ -48,7 +48,7 @@ public class CodeReview {
 
         IOpenAI openAI = new ChatGLM(getEnv("CHATGLM_APIHOST"), getEnv("CHATGLM_APIKEYSECRET"));
 
-        BaseGitOperation baseGitOperation = new GitRestAPIOperation(getEnv("GIT_CHECK_COMMIT_URL"),getEnv("GIT_USER_TOKEN"));
+        BaseGitOperation baseGitOperation = new GitRestAPIOperation(getEnv("GIT_CHECK_COMMIT_URL"),getEnv("CODE_TOKEN"));
 
         IMessageStrategy messageStrategy = MessageFactory.getMessageStrategy(getEnv("NOTIFY_TYPE"));
 
