@@ -1,6 +1,7 @@
 package com.iyaovo.sdk.types.utils;
 
 import com.alibaba.fastjson2.JSON;
+import com.iyaovo.sdk.infrastructure.feishu.BotMessageRequestDTO;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -44,6 +45,10 @@ public class DefaultHttpUtil {
     }
 
     public static String executePostRequest(String uri, Map<String, String> headers,Object body) throws Exception {
+        Object body1 = body;
+        BotMessageRequestDTO  b =  (BotMessageRequestDTO)body1;
+        System.out.println("这里");
+        System.out.println(b.getContent().getText());
         URL url = new URL(uri);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
