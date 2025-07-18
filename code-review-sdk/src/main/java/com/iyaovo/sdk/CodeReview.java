@@ -52,7 +52,7 @@ public class CodeReview {
 
         System.out.println(baseGitOperation.toString());
         IMessageStrategy messageStrategy = MessageFactory.getMessageStrategy(getEnv("NOTIFY_TYPE"));
-        System.out.println("zhe" + messageStrategy.toString());
+        System.out.println(getEnv("NOTIFY_TYPE"));
         OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(baseGitOperation,gitCommand, openAI, messageStrategy);
         openAiCodeReviewService.exec();
 
