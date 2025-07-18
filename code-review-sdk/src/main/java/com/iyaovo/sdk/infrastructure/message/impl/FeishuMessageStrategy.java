@@ -21,6 +21,7 @@ public class FeishuMessageStrategy implements IMessageStrategy {
     @Override
     public void sendMessage(String logUrl, Map<String, Map<String, String>> data) {
         try {
+            System.out.println("url" + System.getenv("FEISHU_URI"));
             String botWebhook = System.getenv("FEISHU_URI");
             Feishu feishu = new Feishu(botWebhook);
             feishu.sendMessage(logUrl);

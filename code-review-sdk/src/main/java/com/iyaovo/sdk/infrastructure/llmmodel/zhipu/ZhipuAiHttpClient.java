@@ -27,7 +27,6 @@ public class ZhipuAiHttpClient {
         try {
             // 发送网络请求解析响应
             Map<String, String> headers = new HashMap<>();
-//            apiKey = "75575f7ac33940449c86b588272d9408.pDmlbeaH8KDo7FWs";
             headers.put("Authorization", "Bearer " + apiKey);
             headers.put("Content-Type", "application/json");
             String url = this.baseUrl + "/api/paas/v4/chat/completions";

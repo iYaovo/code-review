@@ -17,6 +17,8 @@ public class MessageFactory {
     }
 
     public static IMessageStrategy getMessageStrategy(String name) {
+        System.out.println("这里" + name);
+
         return registry.get(name);
     }
 }
