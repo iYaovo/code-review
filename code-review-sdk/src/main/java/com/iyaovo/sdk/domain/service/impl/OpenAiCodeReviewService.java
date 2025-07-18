@@ -22,8 +22,6 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
 
     private BaseGitOperation gitOperation;
 
-    private IMessageStrategy messageStrategy;
-
     public OpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, IMessageStrategy messageStrategy) {
         super(gitCommand, openAI, messageStrategy);
     }

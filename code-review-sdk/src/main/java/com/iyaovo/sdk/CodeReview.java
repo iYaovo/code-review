@@ -51,8 +51,6 @@ public class CodeReview {
         BaseGitOperation baseGitOperation = new GitRestAPIOperation(getEnv("GIT_CHECK_COMMIT_URL"),getEnv("GITHUB_TOKEN"));
 
         IMessageStrategy messageStrategy = MessageFactory.getMessageStrategy(getEnv("NOTIFY_TYPE"));
-        System.out.println("有没有到底" + messageStrategy);
-        System.out.println(getEnv("NOTIFY_TYPE"));
         OpenAiCodeReviewService openAiCodeReviewService = new OpenAiCodeReviewService(baseGitOperation,gitCommand, openAI, messageStrategy);
         openAiCodeReviewService.exec();
 
