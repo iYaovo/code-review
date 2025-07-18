@@ -35,6 +35,7 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
 
     @Override
     protected String getDiffCode() throws Exception {
+        System.out.println("zhe");
         System.out.println("这里呢" + gitOperation.toString());
         return this.gitOperation.diff();
     }
