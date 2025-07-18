@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -50,7 +51,7 @@ public class DefaultHttpUtil {
         headers.forEach((key, value) -> connection.setRequestProperty(key, value));
         connection.setDoOutput(true);
         try(OutputStream os = connection.getOutputStream()){
-            byte[] input = JSON.toJSONString(body).getBytes("UTF-8");
+            byte[] input = JSON.toJSONString(body).getBytes(StandardCharsets.UTF_8);
             os.write(input,0,input.length);
         }
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
