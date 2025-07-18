@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class MessageFactory {
 
-    private static Map<String, IMessageStrategy> registry = new HashMap<>();
+    private static final Map<String, IMessageStrategy> registry = new HashMap<>();
 
     static {
         // 初始化2个策略实现
@@ -18,7 +18,7 @@ public class MessageFactory {
 
     public static IMessageStrategy getMessageStrategy(String name) {
         System.out.println("这里" + name);
-
+        System.out.println("有吗"+ registry.get("feishu"));
         return registry.get(name);
     }
 }
