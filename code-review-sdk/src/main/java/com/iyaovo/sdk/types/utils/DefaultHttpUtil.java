@@ -1,6 +1,6 @@
 package com.iyaovo.sdk.types.utils;
 
-import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson.JSON;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
