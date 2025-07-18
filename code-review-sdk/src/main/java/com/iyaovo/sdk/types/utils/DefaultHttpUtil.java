@@ -45,7 +45,7 @@ public class DefaultHttpUtil {
     public static String executePostRequest(String uri, Map<String, String> headers,Object body) throws Exception {
         URL url = new URL(uri);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
+        connection.setRequestMethod("POST");
         // 设置请求头
         headers.forEach((key, value) -> connection.setRequestProperty(key, value));
         connection.setDoOutput(true);
