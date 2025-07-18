@@ -1,6 +1,6 @@
 package com.iyaovo.sdk.types.utils;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -51,8 +51,6 @@ public class DefaultHttpUtil {
         headers.forEach((key, value) -> connection.setRequestProperty(key, value));
         connection.setDoOutput(true);
         try(OutputStream os = connection.getOutputStream()){
-            String jsonString = JSON.toJSONString(body);
-            System.out.println(jsonString);
             byte[] input = JSON.toJSONString(body).getBytes(StandardCharsets.UTF_8);
             os.write(input,0,input.length);
         }
