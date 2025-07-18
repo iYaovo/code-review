@@ -30,12 +30,11 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
 
     public OpenAiCodeReviewService(BaseGitOperation baseGitOperation, GitCommand gitCommand, IOpenAI openAI, IMessageStrategy messageStrategy) {
         super(gitCommand, openAI, messageStrategy);
-        this.gitOperation = gitOperation;
+        this.gitOperation = baseGitOperation;
     }
 
     @Override
     protected String getDiffCode() throws Exception {
-        System.out.println("zhe");
         System.out.println("这里呢" + gitOperation.toString());
         return this.gitOperation.diff();
     }
