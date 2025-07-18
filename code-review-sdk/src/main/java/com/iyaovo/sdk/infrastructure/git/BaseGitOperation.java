@@ -10,4 +10,12 @@ public interface BaseGitOperation {
      * @return 变更内容
      */
     public String diff() throws Exception;
+
+    /**
+     * 写结果处理方法
+     * @param result 评审结果
+     * @return 跳转地址
+     * @throws Exception
+     */
+    public String writeResult(String result) throws Exception;
 }

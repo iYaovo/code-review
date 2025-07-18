@@ -67,6 +67,11 @@ public class GitCommand implements BaseGitOperation{
         return diffCode.toString();
     }
 
+    @Override
+    public String writeResult(String result) throws Exception {
+        return this.commitAndPush(result);
+    }
+
     public String commitAndPush(String recommend) throws Exception {
         Git git = Git.cloneRepository()
                 .setURI(githubReviewLogUri + ".git")

@@ -11,6 +11,7 @@ public class SingleCommitResponseDTO {
 
     private String sha;
     private Commit commit;
+    private String html_url;
     private CommitFile[] files;
 
     @Data

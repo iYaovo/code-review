@@ -4,6 +4,8 @@ package com.iyaovo.sdk.domain.service.impl;
 import com.iyaovo.sdk.domain.service.AbstractOpenAiCodeReviewService;
 import com.iyaovo.sdk.infrastructure.git.BaseGitOperation;
 import com.iyaovo.sdk.infrastructure.git.GitCommand;
+import com.iyaovo.sdk.infrastructure.git.write.IWriteHandlerStrategy;
+import com.iyaovo.sdk.infrastructure.git.write.WriteHandlerStrategyFactory;
 import com.iyaovo.sdk.infrastructure.llmmodel.common.output.Response;
 import com.iyaovo.sdk.infrastructure.llmmodel.common.text.AIMessageText;
 import com.iyaovo.sdk.infrastructure.llmmodel.common.text.SystemMessageText;
@@ -58,7 +60,14 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
 
     @Override
     protected String recordCodeReview(String recommend) throws Exception {
-        return gitCommand.commitAndPush(recommend);
+        // 先临时定一个变量，未来更改为外部传递
+        String writeHandler = "comment";
+        // 根据配置的情况进行策略的处理
+        IWriteHandlerStrategy strategyHandler = WriteHandlerStrategyFactory.getStrategy(writeHandler);
+        // 这里暂时我们写成git rest api 后续重构下Git的策略
+        strategyHandler.initData(gitOperation);
+        // 调用策略处理器处理下
+        return strategyHandler.execute(recommend);
     }
 
     @Override
