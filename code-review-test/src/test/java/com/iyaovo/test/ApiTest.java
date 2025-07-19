@@ -13,7 +13,7 @@ public class ApiTest {
 
     @Test
     public void test() {
-        System.out.println(Integer.parseInt("这里要评审12312"));
+        System.out.println(Integer.parseInt("这里要评"));
     }
 
 }
