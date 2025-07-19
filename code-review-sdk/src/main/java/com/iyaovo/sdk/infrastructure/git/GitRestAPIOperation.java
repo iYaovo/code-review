@@ -114,14 +114,14 @@ public class GitRestAPIOperation implements BaseGitOperation{
         SingleCommitResponseDTO.CommitFile[] files = singleCommitResponseDTO.getFiles();
         //TODO delete
         System.out.println(files[0].getFilename());
-//        for (SingleCommitResponseDTO.CommitFile file : files) {
-//            String patch = file.getPatch();
-//            int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
-//            CommitCommentRequestDTO request = new CommitCommentRequestDTO();
-//            request.setBody(patch);
-//            request.setPosition(diffPositionIndex);
-//            request.setPath(file.getFileName());
-//        }
+        for (SingleCommitResponseDTO.CommitFile file : files) {
+            String patch = file.getPatch();
+            int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
+            CommitCommentRequestDTO request = new CommitCommentRequestDTO();
+            request.setBody(patch);
+            request.setPosition(diffPositionIndex);
+            request.setPath(file.getFilename());
+        }
         return singleCommitResponseDTO;
     }
 }
