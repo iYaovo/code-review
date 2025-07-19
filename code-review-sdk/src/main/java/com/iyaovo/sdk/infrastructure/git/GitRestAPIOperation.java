@@ -1,6 +1,7 @@
 package com.iyaovo.sdk.infrastructure.git;
 
 import com.alibaba.fastjson2.JSON;
+import com.iyaovo.sdk.domain.model.CodeReviewFile;
 import com.iyaovo.sdk.infrastructure.git.dto.CommitCommentRequestDTO;
 import com.iyaovo.sdk.infrastructure.git.dto.SingleCommitResponseDTO;
 import com.iyaovo.sdk.types.utils.DefaultHttpUtil;
@@ -8,7 +9,9 @@ import com.iyaovo.sdk.types.utils.DiffParseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GitRestAPIOperation implements BaseGitOperation{
@@ -44,6 +47,23 @@ public class GitRestAPIOperation implements BaseGitOperation{
             sb.append("该文件变更代码：").append(file.getPatch());
         }
         return sb.toString();
+    }
+
+    @Override
+    public List<CodeReviewFile> diffFileList() throws Exception {
+        SingleCommitResponseDTO responseDTO = getCommitResponse();
+        SingleCommitResponseDTO.CommitFile[] files = responseDTO.getFiles();
+        List<CodeReviewFile> list = new ArrayList<>();
+        for(SingleCommitResponseDTO.CommitFile file : files) {
+            CodeReviewFile codeReviewFile = new CodeReviewFile();
+            codeReviewFile.setFileName(file.getFileName());
+            codeReviewFile.setDiff(file.getPatch());
+            //发送请求获得文件内容
+            String result = DefaultHttpUtil.executeGetRequest(file.getRaw_url(), new HashMap<>());
+            codeReviewFile.setFileContent(result);
+            list.add(codeReviewFile);
+        }
+        return list;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.iyaovo.sdk.infrastructure.git;
 
+import com.iyaovo.sdk.domain.model.CodeReviewFile;
 import com.iyaovo.sdk.types.utils.RandomStringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
@@ -8,7 +9,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class GitCommand implements BaseGitOperation{
 
@@ -65,6 +68,11 @@ public class GitCommand implements BaseGitOperation{
         }
 
         return diffCode.toString();
+    }
+
+    @Override
+    public List<CodeReviewFile> diffFileList() throws Exception {
+        return Collections.emptyList();
     }
 
     @Override

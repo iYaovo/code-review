@@ -1,5 +1,6 @@
 package com.iyaovo.sdk.domain.service;
 
+import com.iyaovo.sdk.domain.model.ExecuteCodeReviewRequestContext;
 import com.iyaovo.sdk.infrastructure.git.GitCommand;
 import com.iyaovo.sdk.infrastructure.message.IMessageStrategy;
 import com.iyaovo.sdk.infrastructure.openai.IOpenAI;
@@ -30,10 +31,13 @@ public abstract class AbstractOpenAiCodeReviewService implements IOpenAiCodeRevi
     @Override
     public void exec() {
         try {
+            //封装执行请求上下文进行业务数据处理
+            ExecuteCodeReviewRequestContext context = new ExecuteCodeReviewRequestContext();
+
             // 1. 获取提交代码
-            String diffCode = getDiffCode();
+            getDiffCode(context);
             // 2. 开始评审代码
-            String recommend = codeReview(diffCode);
+            String recommend = codeReview(context);
             // 3. 记录评审结果；返回日志地址
             String logUrl = recordCodeReview(recommend);
             // 4. 发送消息通知；日志地址、通知的内容
@@ -44,9 +48,9 @@ public abstract class AbstractOpenAiCodeReviewService implements IOpenAiCodeRevi
 
     }
 
-    protected abstract String getDiffCode() throws IOException, InterruptedException, Exception;
+    protected abstract void getDiffCode(ExecuteCodeReviewRequestContext context) throws IOException, InterruptedException, Exception;
 
-    protected abstract String codeReview(String diffCode) throws Exception;
+    protected abstract String codeReview(ExecuteCodeReviewRequestContext context) throws Exception;
 
     protected abstract String recordCodeReview(String recommend) throws Exception;
 
