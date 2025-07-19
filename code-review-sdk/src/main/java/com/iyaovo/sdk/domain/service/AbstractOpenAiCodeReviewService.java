@@ -22,7 +22,6 @@ public abstract class AbstractOpenAiCodeReviewService implements IOpenAiCodeRevi
     protected final IMessageStrategy messageStrategy;
 
     public AbstractOpenAiCodeReviewService(GitCommand gitCommand, IOpenAI openAI, IMessageStrategy messageStrategy) {
-        System.out.println("这里应该有" + messageStrategy);
         this.gitCommand = gitCommand;
         this.openAI = openAI;
         this.messageStrategy = messageStrategy;

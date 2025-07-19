@@ -22,7 +22,7 @@ public class SingleCommitResponseDTO {
     @Data
     public static class CommitFile{
 
-        private String fileName;
+        private String filename;
 
         private String raw_url;
 

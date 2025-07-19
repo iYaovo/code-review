@@ -43,7 +43,7 @@ public class GitRestAPIOperation implements BaseGitOperation{
         SingleCommitResponseDTO.CommitFile[] files = singleCommitResponseDTO.getFiles();
         StringBuilder sb = new StringBuilder();
         for(SingleCommitResponseDTO.CommitFile file : files){
-            sb.append("待评审文件名称：").append(file.getFileName());
+            sb.append("待评审文件名称：").append(file.getFilename());
             sb.append("该文件变更代码：").append(file.getPatch());
         }
         return sb.toString();
@@ -56,7 +56,7 @@ public class GitRestAPIOperation implements BaseGitOperation{
         List<CodeReviewFile> list = new ArrayList<>();
         for(SingleCommitResponseDTO.CommitFile file : files) {
             CodeReviewFile codeReviewFile = new CodeReviewFile();
-            codeReviewFile.setFileName(file.getFileName());
+            codeReviewFile.setFileName(file.getFilename());
             codeReviewFile.setDiff(file.getPatch());
             //发送请求获得文件内容
             String result = DefaultHttpUtil.executeGetRequest(file.getRaw_url(), new HashMap<>());
@@ -77,7 +77,7 @@ public class GitRestAPIOperation implements BaseGitOperation{
             CommitCommentRequestDTO request = new CommitCommentRequestDTO();
             request.setBody(codeResult);
             request.setPosition(diffPositionIndex);
-            request.setPath(file.getFileName());
+            request.setPath(file.getFilename());
             logger.info("写入注释请求参数:{}", JSON.toJSONString(request));
             writeCommentRequest(request);
             logger.info("写入评审到注释区域处理完成");
@@ -113,7 +113,7 @@ public class GitRestAPIOperation implements BaseGitOperation{
         SingleCommitResponseDTO singleCommitResponseDTO = JSON.parseObject(result, SingleCommitResponseDTO.class);
         SingleCommitResponseDTO.CommitFile[] files = singleCommitResponseDTO.getFiles();
         //TODO delete
-        System.out.println(files[0].getFileName());
+        System.out.println(files[0].getFilename());
 //        for (SingleCommitResponseDTO.CommitFile file : files) {
 //            String patch = file.getPatch();
 //            int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
