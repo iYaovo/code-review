@@ -53,7 +53,6 @@ public class GitRestAPIOperation implements BaseGitOperation{
     public List<CodeReviewFile> diffFileList() throws Exception {
         SingleCommitResponseDTO responseDTO = getCommitResponse();
         SingleCommitResponseDTO.CommitFile[] files = responseDTO.getFiles();
-        System.out.println("那里长度"+files.length);
         List<CodeReviewFile> list = new ArrayList<>();
         for(SingleCommitResponseDTO.CommitFile file : files) {
             CodeReviewFile codeReviewFile = new CodeReviewFile();
@@ -71,21 +70,32 @@ public class GitRestAPIOperation implements BaseGitOperation{
     public String writeResult(String codeResult) throws Exception {
         SingleCommitResponseDTO responseDTO = getCommitResponse();
         SingleCommitResponseDTO.CommitFile[] files = responseDTO.getFiles();
-        System.out.println("这里长度"+files.length);
-        for (SingleCommitResponseDTO.CommitFile file : files) {
-            String patch = file.getPatch();
-            // GitHub 的 Commit Comment API 需要的是变更字符串中的索引
-            int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
-            CommitCommentRequestDTO request = new CommitCommentRequestDTO();
-            request.setBody(codeResult);
-            request.setPosition(diffPositionIndex);
-            request.setPath(file.getFilename());
-            logger.info("写入注释请求参数:{}", JSON.toJSONString(request));
-            writeCommentRequest(request);
-            logger.info("写入评审到注释区域处理完成");
-            // TODO 由于之前的评审是一次性评审多个文件，所以这里我们让他暂时只执行一次。未来优化下
-            break;
-        }
+        //TODO 由于之前的评审是一次性评审多个文件，所以这里我们让他暂时让他直接写入评论区。未来优化下
+//        for (SingleCommitResponseDTO.CommitFile file : files) {
+//            String patch = file.getPatch();
+//            // GitHub 的 Commit Comment API 需要的是变更字符串中的索引
+//            int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
+//            CommitCommentRequestDTO request = new CommitCommentRequestDTO();
+//            request.setBody(codeResult);
+//            request.setPosition(diffPositionIndex);
+//            request.setPath(file.getFilename());
+//            logger.info("写入注释请求参数:{}", JSON.toJSONString(request));
+//            writeCommentRequest(request);
+//            logger.info("写入评审到注释区域处理完成");
+//            //
+//            break;
+//        }
+        SingleCommitResponseDTO.CommitFile file = files[files.length - 1];
+        String patch = file.getPatch();
+        // GitHub 的 Commit Comment API 需要的是变更字符串中的索引
+        int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
+        CommitCommentRequestDTO request = new CommitCommentRequestDTO();
+        request.setBody(codeResult);
+        request.setPosition(diffPositionIndex);
+        request.setPath(file.getFilename());
+        logger.info("写入注释请求参数:{}", JSON.toJSONString(request));
+        writeCommentRequest(request);
+        logger.info("写入评审到注释区域处理完成");
         return responseDTO.getHtml_url();
     }
 
@@ -110,13 +120,10 @@ public class GitRestAPIOperation implements BaseGitOperation{
         headers.put("Authorization", "Bearer " + githubToken);
         headers.put("Accept", "application/vnd.github+json");
         String result = DefaultHttpUtil.executeGetRequest(this.githubRepoUrl, headers);
-        //TODO delete
-        System.out.println("来这里看请求结果" + result);
         SingleCommitResponseDTO singleCommitResponseDTO = JSON.parseObject(result, SingleCommitResponseDTO.class);
         SingleCommitResponseDTO.CommitFile[] files = singleCommitResponseDTO.getFiles();
 
         for (SingleCommitResponseDTO.CommitFile file : files) {
-            System.out.println("这里"+file.getFilename());
             String patch = file.getPatch();
             int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
             CommitCommentRequestDTO request = new CommitCommentRequestDTO();
