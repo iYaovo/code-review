@@ -91,8 +91,9 @@ public class GitRestAPIOperation implements BaseGitOperation{
         int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
         CommitCommentRequestDTO request = new CommitCommentRequestDTO();
         request.setBody(codeResult);
-        request.setPosition(diffPositionIndex);
-        request.setPath(file.getFilename());
+        //TODO 不带这两个参数就是直接写入评论区
+//        request.setPosition(diffPositionIndex);
+//        request.setPath(file.getFilename());
         logger.info("写入注释请求参数:{}", JSON.toJSONString(request));
         writeCommentRequest(request);
         logger.info("写入评审到注释区域处理完成");
