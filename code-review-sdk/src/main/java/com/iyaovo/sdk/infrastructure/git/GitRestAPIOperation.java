@@ -108,16 +108,20 @@ public class GitRestAPIOperation implements BaseGitOperation{
         headers.put("Authorization", "Bearer " + githubToken);
         headers.put("Accept", "application/vnd.github+json");
         String result = DefaultHttpUtil.executeGetRequest(this.githubRepoUrl, headers);
+        //TODO delete
+        System.out.println("来这里看请求结果" + result);
         SingleCommitResponseDTO singleCommitResponseDTO = JSON.parseObject(result, SingleCommitResponseDTO.class);
         SingleCommitResponseDTO.CommitFile[] files = singleCommitResponseDTO.getFiles();
-        for (SingleCommitResponseDTO.CommitFile file : files) {
-            String patch = file.getPatch();
-            int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
-            CommitCommentRequestDTO request = new CommitCommentRequestDTO();
-            request.setBody(patch);
-            request.setPosition(diffPositionIndex);
-            request.setPath(file.getFileName());
-        }
+        //TODO delete
+        System.out.println(files[0].getFileName());
+//        for (SingleCommitResponseDTO.CommitFile file : files) {
+//            String patch = file.getPatch();
+//            int diffPositionIndex = DiffParseUtil.parseLastDiffPosition(patch);
+//            CommitCommentRequestDTO request = new CommitCommentRequestDTO();
+//            request.setBody(patch);
+//            request.setPosition(diffPositionIndex);
+//            request.setPath(file.getFileName());
+//        }
         return singleCommitResponseDTO;
     }
 }
